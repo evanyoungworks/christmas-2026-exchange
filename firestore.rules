@@ -10,6 +10,43 @@ service cloud.firestore {
         && request.resource.data.items.size() <= 60;
       allow delete: if false;
     }
+    // Login audit log: anyone can add an entry, nobody can read/change/delete from the client.
+    // Read it with the Firebase console or scripts/read-login-log.mjs (uses your Firebase login).
+    match /loginLog/{entryId} {
+      allow read, update, delete: if false;
+      allow create: if isValidLogEntry(request.resource.data);
+    }
+
+    function optStr(d, k, n) {
+      return !(k in d) || d[k] == null || (d[k] is string && d[k].size() <= n);
+    }
+    function isValidLogEntry(d) {
+      return d.keys().hasOnly(['firstName', 'lastName', 'matchedParticipant', 'success', 'failureReason',
+                               'pinEntered', 'timestamp', 'clientTime', 'ip', 'geo', 'userAgent', 'device',
+                               'platform', 'screen', 'language', 'languages', 'timezone', 'referrer', 'pageUrl'])
+        && d.keys().hasAll(['firstName', 'lastName', 'success', 'timestamp'])
+        && d.firstName is string && d.firstName.size() <= 100
+        && d.lastName is string && d.lastName.size() <= 100
+        && d.success is bool
+        && d.timestamp == request.time
+        && (d.success == false || !('pinEntered' in d))
+        && optStr(d, 'pinEntered', 50)
+        && optStr(d, 'matchedParticipant', 100)
+        && optStr(d, 'failureReason', 100)
+        && optStr(d, 'clientTime', 40)
+        && optStr(d, 'ip', 64)
+        && optStr(d, 'userAgent', 500)
+        && optStr(d, 'platform', 60)
+        && optStr(d, 'language', 40)
+        && optStr(d, 'timezone', 64)
+        && optStr(d, 'referrer', 500)
+        && optStr(d, 'pageUrl', 500)
+        && (!('geo' in d) || d.geo == null || (d.geo is map && d.geo.size() <= 20))
+        && (!('device' in d) || (d.device is map && d.device.size() <= 10))
+        && (!('screen' in d) || (d.screen is map && d.screen.size() <= 10))
+        && (!('languages' in d) || (d.languages is list && d.languages.size() <= 5));
+    }
+
     // Everything else is locked.
     match /{document=**} {
       allow read, write: if false;

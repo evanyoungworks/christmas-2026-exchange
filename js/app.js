@@ -1,6 +1,7 @@
 import { findParticipant } from "./participants.js";
 import { findAssignment } from "./drawcrypto.js";
 import { isConfigured, watchList, saveList } from "./store.js";
+import { logLoginAttempt } from "./loginlog.js";
 
 const $ = (id) => document.getElementById(id);
 const SESSION_KEY = "xmas2026-session";
@@ -24,10 +25,26 @@ function show(view) {
 }
 
 async function login(first, last, pin, remember = true) {
+  const audit = (success, failureReason, matched) => remember && logLoginAttempt({
+    firstName: first, lastName: last, matchedParticipant: matched, success, failureReason, pinEntered: pin,
+  });
   const name = findParticipant(first, last);
-  if (!name) throw new Error("Hmm, we couldn't find that name in this year's exchange. Check the spelling?");
-  const recipient = await findAssignment(await loadDraw(), name, pin);
-  if (!recipient) throw new Error("That PIN doesn't look right. Try again!");
+  if (!name) {
+    audit(false, "unknown-name", null);
+    throw new Error("Hmm, we couldn't find that name in this year's exchange. Check the spelling?");
+  }
+  let recipient;
+  try {
+    recipient = await findAssignment(await loadDraw(), name, pin);
+  } catch (e) {
+    audit(false, "error: " + (e && e.message), name);
+    throw new Error("Something went wrong. Please refresh and try again.");
+  }
+  if (!recipient) {
+    audit(false, "wrong-pin", name);
+    throw new Error("That PIN doesn't look right. Try again!");
+  }
+  audit(true, null, name);
   if (remember) localStorage.setItem(SESSION_KEY, JSON.stringify({ name, pin: String(pin).trim() }));
   me = name;
   renderHome(recipient);

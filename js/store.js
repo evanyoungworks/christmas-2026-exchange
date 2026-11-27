@@ -32,3 +32,10 @@ export async function saveList(name, items) {
     updatedAt: fs.serverTimestamp(),
   });
 }
+
+// Login audit log: create-only collection (clients can't read it back).
+export async function writeLoginLog(entry) {
+  if (!isConfigured()) return;
+  await init();
+  await fs.addDoc(fs.collection(db, "loginLog"), { ...entry, timestamp: fs.serverTimestamp() });
+}
