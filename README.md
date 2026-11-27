@@ -40,6 +40,21 @@ Wishlists are stored in the Firebase project **`christmas-2026-exchange`** (Fire
 
 The Firebase web config is meant to be public, so it's fine to commit; the rules in `firestore.rules` only allow the six family wishlists to be read and written.
 
+## 🔍 Login audit log
+
+Every typed login attempt (success or failure) adds an entry to the Firestore collection **`loginLog`**:
+names as typed, matched participant, success, failure reason, the PIN typed (**only on failed attempts**),
+server timestamp + client time, IP address and approximate location (city, region, country, lat/lon, ISP via ipwho.is,
+falling back to ipapi.co), user agent, device type/OS/browser, platform, screen size, language, timezone, referrer and page URL.
+Automatic re-logins from a saved session are not logged. If the location lookup fails, login still works and the entry is saved without location.
+
+The website can only *add* entries; nobody can read, change, or delete them from the browser.
+
+**View it:**
+- Firebase console: <https://console.firebase.google.com/project/christmas-2026-exchange/firestore> → `loginLog`
+- Terminal (uses your Firebase login, run `npx firebase-tools login` once): `node scripts/read-login-log.mjs` (add `--limit 200` or `--json`)
+- Delete an entry: `npx firebase-tools firestore:delete loginLog/<id> --force --project christmas-2026-exchange`
+
 ## How the draw is kept secret
 
 - The 2026 draw was generated randomly by `scripts/generate-draw.mjs` and was **never printed** anywhere.

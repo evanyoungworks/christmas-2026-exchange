@@ -62,7 +62,7 @@ try {
       const g = d.geo || {};
       const dev = d.device || {};
       return {
-        time: d.clientTime,
+        time: d.clientTime ? new Date(d.clientTime).toLocaleString("en-US", { timeZone: "America/Chicago", dateStyle: "short", timeStyle: "medium" }) + " CT" : "",
         name: `${d.firstName} ${d.lastName}`.trim(),
         ok: d.success ? "✔" : "✘",
         reason: d.failureReason || "",
