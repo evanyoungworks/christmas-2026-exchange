@@ -1,0 +1,8 @@
+{
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "node scripts/test-rules.mjs && node scripts/verify-draw.mjs",
+    "draw": "node scripts/generate-draw.mjs"
+  }
+}

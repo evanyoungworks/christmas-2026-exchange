@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Christmas 2026 🎄 Family Gift Exchange</title>
+  <meta name="theme-color" content="#7a1220" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎁</text></svg>" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="snow" aria-hidden="true"></div>
+  <header class="top">
+    <h1>🎄 Christmas 2026 <span>Gift Exchange</span></h1>
+    <button id="logout" class="link-btn" hidden>Log out</button>
+  </header>
+
+  <main>
+    <!-- Login -->
+    <section id="login-view" class="card login" hidden>
+      <h2>Ho ho ho! Who are you?</h2>
+      <p class="muted">Sign in to see who you're buying for and to build your wishlist.</p>
+      <form id="login-form" autocomplete="on">
+        <label>First name <input id="first" name="given-name" autocomplete="given-name" required /></label>
+        <label>Last name <input id="last" name="family-name" autocomplete="family-name" required /></label>
+        <label>PIN <input id="pin" type="password" inputmode="numeric" autocomplete="current-password" required /></label>
+        <button type="submit" class="btn primary" id="login-btn">Open my gift tag 🎁</button>
+        <p id="login-error" class="error" role="alert"></p>
+      </form>
+    </section>
+
+    <!-- Logged in -->
+    <section id="home-view" hidden>
+      <p class="hello">Merry Christmas, <strong id="me-first"></strong>! 🎅</p>
+      <div id="setup-banner" class="banner" hidden>
+        Wishlists aren't switched on yet (the site owner still needs to finish setup). Your Secret Santa name works now, so check back soon to add gift ideas.
+      </div>
+
+      <div class="card tag">
+        <p class="tag-label">You're buying for</p>
+        <p class="recipient" id="recipient"></p>
+        <p class="muted small">Shh 🤫 keep it secret! Nobody else can see who you have.</p>
+      </div>
+
+      <div class="card">
+        <h2><span id="recipient-first"></span>'s wishlist</h2>
+        <ul id="their-list" class="items"></ul>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <h2>My wishlist</h2>
+          <button id="add-btn" class="btn primary small-btn">+ Add idea</button>
+        </div>
+        <p class="muted small">Add an Amazon wish list link, a specific item, or just describe what you'd like. Your Secret Santa will see this list.</p>
+        <form id="item-form" class="item-form" hidden>
+          <fieldset class="types">
+            <label><input type="radio" name="type" value="item" checked /> Specific item</label>
+            <label><input type="radio" name="type" value="amazon-list" /> Amazon wish list</label>
+            <label><input type="radio" name="type" value="idea" /> Idea / description</label>
+          </fieldset>
+          <label>Title <input name="title" maxlength="120" required placeholder="e.g. Cozy wool socks" /></label>
+          <label>Link <span class="muted">(optional)</span> <input name="link" type="url" maxlength="1000" placeholder="https://…" /></label>
+          <label>Notes <span class="muted">(optional)</span> <textarea name="notes" maxlength="1000" rows="3" placeholder="Color, brand, anything helpful"></textarea></label>
+          <div class="two">
+            <label>Price <span class="muted">(optional)</span> <input name="price" maxlength="30" placeholder="~$25" /></label>
+            <label>Size <span class="muted">(optional)</span> <input name="size" maxlength="30" placeholder="M, 10.5…" /></label>
+          </div>
+          <div class="row end">
+            <button type="button" id="cancel-btn" class="btn">Cancel</button>
+            <button type="submit" class="btn primary" id="save-btn">Save</button>
+          </div>
+          <p id="item-error" class="error" role="alert"></p>
+        </form>
+        <ul id="my-list" class="items"></ul>
+      </div>
+    </section>
+  </main>
+  <footer>Made with ❤️ for the family · Christmas 2026</footer>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

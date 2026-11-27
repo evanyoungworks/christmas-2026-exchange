@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "year": 2026,
+  "kdf": "PBKDF2-SHA256",
+  "cipher": "AES-256-GCM",
+  "iterations": 150000,
+  "salt": "y1UI+wo5cp1kppzxoaWC7g==",
+  "entries": [
+    {
+      "iv": "/uw4CtW1WuWY1Lo1",
+      "ct": "jW7QpUs8dXVtOfQO/VgucnAR8wmHwyIi9dpIZJAablVTX8mJYEqU4jj6tltwWbaFKdHn6u0ShDN5XmYJ9TFh"
+    },
+    {
+      "iv": "wIv9+2+Dctqg5MtM",
+      "ct": "ti08K0lWk1N4fqO2Pd0/JcczDgmPoDInUKmMyuwqr/+rptj1dVH52LM+t15K4ep+Jd54n1H7bfihaCNsUybnLRHBMg=="
+    },
+    {
+      "iv": "V1AM/DOub3mfAEXi",
+      "ct": "4UD6K09GSEebdmoiSuUiRfEplhc5YvlAgEZLF87MswQGOTqkJNeiWdLf4pQUoUcLJAw+EiHJjnu6esjs7r+H"
+    },
+    {
+      "iv": "1k7MglIsZa0viIcI",
+      "ct": "ghCJtFjzo88MwgOcbB+E8pv7Z8mFfPgERO+qCSNluDfRVNjHy3zmZ6c6XiMQ4Lq9jssnMpVfFBXzq3bM2fyV"
+    },
+    {
+      "iv": "BmW4Q4wZf21TDsFF",
+      "ct": "wMZ4q/pVKKNq/yr2FLtjbcdROTFzZoPhtDEhygyVre43rVBXXSKdsoW5RkJ4Re3dEoP4RqTPT2qjVL8CZB4MTDDvjA=="
+    },
+    {
+      "iv": "PAMzwhWcXVj4xFl1",
+      "ct": "vK1v6xiveOLM1i726dqOM19Vd7EnMTeK+U6L0CUVvpTYCV5WrwQrAKsZiCHZiBb4XaFiRK2l/6JnSQvtoloG"
+    }
+  ]
+}
