@@ -11,9 +11,12 @@ Everyone logs in with their **first name, last name, and PIN `2026`**. They see:
 
 Nobody can see anyone else's draw, and nobody sees who drew them.
 
-## ✅ One-time setup: turn on shared wishlists (about 5 minutes)
+## ✅ Shared wishlists (Firebase) — already set up
 
-The Secret Santa draw works right away. Wishlists need a free Firebase database so everyone sees the same lists.
+Wishlists are stored in the Firebase project **`christmas-2026-exchange`** (Firestore, `nam5`). `config.js` is filled in and the rules are deployed. To change the rules later: edit `firestore.rules` and run `npx firebase-tools deploy --only firestore:rules`.
+
+<details><summary>How it was set up (for reference / a fresh project)</summary>
+
 
 1. Go to <https://console.firebase.google.com> and sign in with any Google account.
 2. Click **Create a project**, name it something like `christmas-2026-exchange`, and turn **off** Google Analytics. Click **Create project**.
@@ -33,7 +36,9 @@ The Secret Santa draw works right away. Wishlists need a free Firebase database 
    ```
    (paste your own values), then click **Commit changes**. The site updates in about a minute.
 
-That's it. The Firebase web config is meant to be public, so it's fine to commit; the rules in `firestore.rules` only allow the six family wishlists to be read and written.
+</details>
+
+The Firebase web config is meant to be public, so it's fine to commit; the rules in `firestore.rules` only allow the six family wishlists to be read and written.
 
 ## How the draw is kept secret
 
